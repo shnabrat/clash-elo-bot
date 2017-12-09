@@ -97,7 +97,7 @@ function updateRank(results){
 }
 
 bot.on("ready", function(){
-	bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
+	//bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
 	// bot.user.setPresence({ game: { name: '!elo about', type: 0 } });
 	bot.user.setGame("!elo about")
 })
