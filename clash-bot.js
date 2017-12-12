@@ -265,4 +265,4 @@ bot.on("message", function (message) {
 	// } 
 });
 
-bot.login(process.env.BOT_TOKEN);
+bot.login("MzgwODg1NDUwMDAyNTMwMzEy.DQzauQ.AFjB265itgfs-nHxbrIkLYKWEzM");
