@@ -97,7 +97,7 @@ function updateRank(results){
 }
 
 bot.on("ready", function(){
-	//bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
+	// bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
 	// bot.user.setPresence({ game: { name: '!elo about', type: 0 } });
 	bot.user.setGame("!elo about")
 })
@@ -107,7 +107,7 @@ bot.on("message", function (message) {
 	// }
 	var prefix="!elo";
 	var command;
-	if(message.content.toLowerCase().startsWith(prefix)&&!message.author.bot){
+	if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.channel.id =="387023805140303872"){
 		command=message.content.slice(prefix.length+1).toLowerCase();
 	
 
