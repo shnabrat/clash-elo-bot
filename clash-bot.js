@@ -224,11 +224,11 @@ bot.on("message", function (message) {
 					}
 				}));
 			} else if (command.startsWith("unban") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
-				remove(bans,(message.mentions[0]));
+				remove(bans, (mentionsArray[0]));
 				message.channel.send(new Discord.RichEmbed({
 					color: 3447003,
 					title: "User unbanned",
-					description: `<@${message.mentions[0].id}> has been forgiven for their heinous crimes.`,
+					description: `<@${mentionsArray[0].id}> has been forgiven for their heinous crimes.`,
 					footer: {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
