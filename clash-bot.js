@@ -167,7 +167,7 @@ bot.on("message", function (message) {
 			break;
 		case "reset":
 			if (message.author.id == "232215051052908545" || message.author.id == "291118393099157505") {
-			console.log("yes1")
+			// console.log("yes1")
 			sortPlayers();
 			updateRankMessage();
 			message.channel.send(new Discord.RichEmbed({
@@ -186,7 +186,7 @@ bot.on("message", function (message) {
 
 			}
 		} else {
-			console.log("no")
+			// console.log("no")
 		}
 		break;
 		default:
@@ -205,12 +205,12 @@ bot.on("message", function (message) {
 		console.log(mentionsArray)
 		
 		if (mentionsArray.length == 2 && (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
-			console.log("yes2")
+			// console.log("yes2")
 			var anyIsBot=false;
 			for(var i in mentionsArray){
 				if(mentionsArray[i].bot){
 					anyIsBot=true;
-					console.log('bot')
+					// console.log('bot')
 				}
 			}
 		if(!anyIsBot){
@@ -222,7 +222,7 @@ bot.on("message", function (message) {
 			var resultsArray = [
 				[mentionsArray[0], scoresArray[0]],[mentionsArray[1], scoresArray[1]]
 			];
-			console.log("ok")
+			// console.log("ok")
 			if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
 				console.log("yes3")
 				updateRank(resultsArray);
@@ -251,7 +251,7 @@ bot.on("message", function (message) {
 			}
 
 		} else {
-			console.log("na")
+			// console.log("na")
 		}
 		// reactions can be the confirmation
 
