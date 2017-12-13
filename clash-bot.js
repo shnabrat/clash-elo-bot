@@ -216,7 +216,7 @@ bot.on("message", function (message) {
 		if(!anyIsBot){
 			var scores=command.split(" ");
 			// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
-			var scoresArray=scores[2].split(":");
+			var scoresArray=scores[1].split(":");
 			scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
 			// [ [user1,score1], [user2, score2] ]
 			var resultsArray = [
@@ -230,7 +230,7 @@ bot.on("message", function (message) {
 					{
 						color: 3447003,
 						title: "Scores updated!",
-						description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+						description: `${resultsArray[0][0]}:ƒs ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 						footer:{
 							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 						}
