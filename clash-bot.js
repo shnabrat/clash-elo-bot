@@ -3,11 +3,15 @@ https://discordapp.com/oauth2/authorize?client_id=380885450002530312&scope=bot&p
 */
 
 /*
-TODO: error checking (inputs are numbers, within range, etc.) (√)
+TODO: 
+- make all admins able to use all admin commands
+-cancel feature using .createReactionCollector()
+
+
+error checking (inputs are numbers, within range, etc.) (√)
 Bots can't play (√)
 User must be one of the players (√)
 reset feature (√)
-cancel feature using .createReactionCollector()
 
 people outside the server can't be in a game (idk)
 
@@ -234,10 +238,20 @@ bot.on("message", function (message) {
 					}
 				}));
 			}else{
+				if(bans.includes(message.author)){
+					message.channel.send(new Discord.RichEmbed({
+						color: 3447003,
+						title: "You're banned",
+						description: `<@${mentionsArray[0].id}> cannot set scores.`,
+						footer: {
+							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+						}
+					}));
+				}else{
 				// console.log("yes2")
 				var anyIsBot=false;
 				for(var i in mentionsArray){
-					if(mentionsArray[i].bot||bans[message.author]){
+					if(mentionsArray[i].bot){
 						anyIsBot=true;
 						// console.log('bot')
 					}
@@ -281,7 +295,7 @@ bot.on("message", function (message) {
 			
 		} else {
 			// console.log("na")
-		}
+		}}
 		// reactions can be the confirmation
 	}
 	}
