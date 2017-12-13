@@ -147,7 +147,7 @@ bot.on("message", function (message) {
 					},
 					{
 						name: "Moderator commands",
-						value: "• `!elo reset`"
+						value: "• `!elo reset`\n•`!elo ban @user`\n•`!elo unban @user`"
 					},
 					{
 						name: "Other commands",
@@ -214,11 +214,11 @@ bot.on("message", function (message) {
 		
 		if (mentionsArray.length == 1 &&mentionsArray[0].id!=message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
 			if (command.startsWith("ban")&&(message.author.id == "232215051052908545" || message.author.id == "291118393099157505")){
-				bans.push(mentionsArray[0][0]);
+				bans.push(mentionsArray[0]);
 				message.channel.send(new Discord.RichEmbed({
 					color: 3447003,
 					title: "User banned",
-					description: `<@${mentionsArray[0][0].id}> has been a naughty child.`,
+					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
