@@ -74,7 +74,8 @@ function updateRankMessage(){
 function updateRank(results){
 	// really simple thing
 	// takes array: [ [user0,score0], [user1, score1] ]
-	
+	console.log("updating rank for: ");
+	console.log(resultsArray);
 	if (!players[results[0][0].id]){
 		players[results[0][0].id]={score:1000}
 	}
