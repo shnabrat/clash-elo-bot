@@ -202,9 +202,9 @@ bot.on("message", function (message) {
 		// 	console.log(false)
 		// }
 		// console.log(mentionsArray[0].id)
-		console.log(mentionsArray)
+		// console.log(mentionsArray)
 		
-		if (mentionsArray.length == 2 && (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
+		if (mentionsArray.length == 1 /*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
 			// console.log("yes2")
 			var anyIsBot=false;
 			for(var i in mentionsArray){
@@ -220,11 +220,11 @@ bot.on("message", function (message) {
 			scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
 			// [ [user1,score1], [user2, score2] ]
 			var resultsArray = [
-				[mentionsArray[0], scoresArray[0]],[mentionsArray[1], scoresArray[1]]
+				[message.member, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
 			];
 			// console.log("ok")
 			if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
-				console.log("yes3")
+				// console.log("yes3")
 				updateRank(resultsArray);
 				message.channel.send(new Discord.RichEmbed(
 					{
