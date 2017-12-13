@@ -136,7 +136,7 @@ bot.on("message", function (message) {
 				fields:[
 					{
 						name: "Core commands",
-						value: "• `!elo @you @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> <@312027665408196628> 2:1)\n\n • `!elo rankings`"
+						value: "• `!elo @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> 2:1)\n\n • `!elo rankings`"
 					},
 					{
 						name: "Moderator commands",
@@ -181,7 +181,7 @@ bot.on("message", function (message) {
 			})
 
 			);
-
+			var toPin=true;
 			players = {
 
 			}
@@ -263,7 +263,12 @@ bot.on("message", function (message) {
 
 	// 	toSendEmbed=false;
 	// 	// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
-	// } 	
+	// } 
+	if(message.author.id==bot.user.id){
+		if(toPin){
+			message.pin();
+		}
+	}	
 });
 
 bot.login(process.env.BOT_TOKEN);
