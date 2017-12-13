@@ -89,10 +89,10 @@ function updateRank(results){
 		players[results[1][0].id].score -= (parseInt(results[0][1]) - parseInt(results[1][1]))*2;
 		if (results[0][1] > results[1][1]){
 			players[results[0][0].id].score += 5
-			players[results[0][0].id].score -= 5
+			players[results[1][0].id].score -= 5
 		} else if (results[0][1] < results[1][1]){
 			players[results[1][0].id].score += 5
-			players[results[1][1].id].score -= 5
+			players[results[0][0].id].score -= 5
 		}
 	}
 }
@@ -204,7 +204,7 @@ bot.on("message", function (message) {
 		// console.log(mentionsArray[0].id)
 		// console.log(mentionsArray)
 		
-		if (mentionsArray.length == 1 /*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
+		if (mentionsArray.length == 1 &&mentionsArray[0].id!=message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
 			// console.log("yes2")
 			var anyIsBot=false;
 			for(var i in mentionsArray){
@@ -230,7 +230,7 @@ bot.on("message", function (message) {
 					{
 						color: 3447003,
 						title: "Scores updated!",
-						description: `${resultsArray[0][0]}:ƒs ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+						description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 						footer:{
 							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 						}
