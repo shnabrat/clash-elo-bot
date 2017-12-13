@@ -70,7 +70,7 @@ function updateRankMessage(){
 		} 
 		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} <@${sortedPlayersArray[i][0]}>: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
-}
+} 
 function updateRank(results){
 	// really simple thing
 	// takes array: [ [user0,score0], [user1, score1] ]
