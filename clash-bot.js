@@ -33,7 +33,7 @@ games={
 	
 }
 var sortedPlayersArray = [];
-
+var bans=[];
 function sortPlayers() {
 	// convert players to array[]
 	var playersArray = Object.keys(players).map(function (key) {
@@ -189,6 +189,7 @@ bot.on("message", function (message) {
 			// console.log("no")
 		}
 		break;
+		
 		default:
 		
 			break;
@@ -205,56 +206,59 @@ bot.on("message", function (message) {
 		// console.log(mentionsArray)
 		
 		if (mentionsArray.length == 1 &&mentionsArray[0].id!=message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
-			// console.log("yes2")
-			var anyIsBot=false;
-			for(var i in mentionsArray){
-				if(mentionsArray[i].bot){
-					anyIsBot=true;
-					// console.log('bot')
+			if (command.startsWith("ban")&&(message.author.id == "232215051052908545" || message.author.id == "291118393099157505")){
+				bans.push(message.mentions[0]);
+			}else{
+				// console.log("yes2")
+				var anyIsBot=false;
+				for(var i in mentionsArray){
+					if(mentionsArray[i].bot||bans[message.author]){
+						anyIsBot=true;
+						// console.log('bot')
+					}
 				}
-			}
-		if(!anyIsBot){
-			var scores=command.split(" ");
-			// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
-			var scoresArray=scores[1].split(":");
-			scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
-			// [ [user1,score1], [user2, score2] ]
-			var resultsArray = [
-				[message.author, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
-			];
-			// console.log("ok")
-			if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
-				// console.log("yes3")
-				updateRank(resultsArray);
-				message.channel.send(new Discord.RichEmbed(
-					{
+			if(!anyIsBot){
+				var scores=command.split(" ");
+				// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
+				var scoresArray=scores[1].split(":");
+				scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
+				// [ [user1,score1], [user2, score2] ]
+				var resultsArray = [
+					[message.author, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
+				];
+				// console.log("ok")
+				if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
+					// console.log("yes3")
+					updateRank(resultsArray);
+					message.channel.send(new Discord.RichEmbed(
+						{
+							color: 3447003,
+							title: "Scores updated!",
+							description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+							footer:{
+								// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+							}
+						}
+					));
+					toSendEmbed=true;
+					games[message.id]=resultsArray;
+				}else{
+					// error: not a bo3 game
+					message.channel.send(new Discord.RichEmbed({
 						color: 3447003,
-						title: "Scores updated!",
-						description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
-						footer:{
+						title: "Something went wrong.",
+						description: `Maybe you formatted the message wrong, or mentioned the wrong players. Try again.`,
+						footer: {
 							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 						}
-					}
-				));
-				toSendEmbed=true;
-				games[message.id]=resultsArray;
-			}else{
-				// error: not a bo3 game
-				message.channel.send(new Discord.RichEmbed({
-					color: 3447003,
-					title: "Something went wrong.",
-					description: `Maybe you formatted the message wrong, or mentioned the wrong players. Try again.`,
-					footer: {
-						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
-					}
-				}));
-			}
-
+					}));
+				}
+			
 		} else {
 			// console.log("na")
 		}
 		// reactions can be the confirmation
-
+	}
 	}
 	}
 	// if(toSendEmbed&&message.author.id==bot.user.id){
