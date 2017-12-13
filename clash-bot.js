@@ -220,7 +220,7 @@ bot.on("message", function (message) {
 			scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
 			// [ [user1,score1], [user2, score2] ]
 			var resultsArray = [
-				[message.member, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
+				[message.author, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
 			];
 			// console.log("ok")
 			if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
