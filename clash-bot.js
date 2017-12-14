@@ -280,7 +280,7 @@ bot.on("message", function (message) {
 					}
 					
 				}));
-				players[mentionsArray[0].id] = {};
+				delete players[mentionsArray[0].id];
 			}else{
 				if(bans.includes(message.author)){
 					message.channel.send(new Discord.RichEmbed({
@@ -373,7 +373,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\`\n\nCancelled by ${user}`,
 					
 				}));
-				delete games[messageReaction.message.id];
+				games[messageReaction.message.id]=false;
 			}
 		}
 	
