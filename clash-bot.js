@@ -174,7 +174,7 @@ bot.on("message", function (message) {
 					},
 					{
 						name: "Moderator commands",
-						value: "• `!elo reset` – reset all scores and display final results\n•`!elo ban @user` – prevent user from participating\n•`!elo unban @user`\n`!elo resetuser @user` – remove user from rankings"
+						value: "• `!elo reset` – reset all scores and display final results\n•`!elo ban @user` – prevent user from participating\n•`!elo unban @user`\n•`!elo resetuser @user` – remove user from rankings"
 					},
 					{
 						name: "Other commands",
@@ -253,7 +253,7 @@ bot.on("message", function (message) {
 					},
 					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
-						text: "This can be cancelled by an admin with `!elo unban @user`. "
+						text: "This can be cancelled by an admin with !elo unban @user. "
 					}
 				}));
 			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
@@ -373,7 +373,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\`\n\nCancelled by ${user}`,
 					
 				}));
-				games[messageReaction.message.id]=false;
+				delete games[messageReaction.message.id];
 			}
 		}
 	
