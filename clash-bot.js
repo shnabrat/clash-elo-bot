@@ -198,7 +198,7 @@ bot.on("message", function (message) {
 				})
 
 			);
-			break;
+			break; 
 		case "reset":
 			if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin")) {
 			// console.log("yes1")
