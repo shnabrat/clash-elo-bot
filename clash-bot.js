@@ -5,8 +5,8 @@ https://discordapp.com/oauth2/authorize?client_id=380885450002530312&scope=bot&p
 /*
 TODO: 
 - make all admins able to use all admin commands
-- admin ability: reset a single player's score
-- cancel feature using .createReactionCollector()
+- admin ability: reset a single player's score (√)
+- cancel feature using .createReactionCollector(√)
 
 
 error checking (inputs are numbers, within range, etc.) (√)
@@ -14,7 +14,7 @@ Bots can't play (√)
 User must be one of the players (√)
 reset feature (√)
 
-people outside the server can't be in a game (idk)
+people outside the server can't be in a game (idk if it's necessary, you can only mention people in server anyway)
 
 */
 var Discord = require("discord.js");
@@ -34,9 +34,7 @@ var rankMessage=``;
 players={
 	
 }
-games={
-	
-}
+games=[]
 var sortedPlayersArray = [];
 var bans=[];
 function sortPlayers() {
@@ -172,11 +170,11 @@ bot.on("message", function (message) {
 				fields:[
 					{
 						name: "Core commands",
-						value: "• `!elo @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> 2:1)\n\n • `!elo rankings`"
+						value: "• `!elo @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> 2:1)\n\n • `!elo rankings` – to view rankings"
 					},
 					{
 						name: "Moderator commands",
-						value: "• `!elo reset`\n•`!elo ban @user`\n•`!elo unban @user`"
+						value: "• `!elo reset` – reset all scores and display final results\n•`!elo ban @user` – prevent user from participating\n•`!elo unban @user`\n`!elo resetuser @user` – remove user from rankings"
 					},
 					{
 						name: "Other commands",
@@ -250,6 +248,9 @@ bot.on("message", function (message) {
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User banned",
+					thumbnail: {
+						url: "https://vignette.wikia.nocookie.net/clashroyale/images/a/ab/Angry_Face.png"
+					},
 					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
 						text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
@@ -265,10 +266,25 @@ bot.on("message", function (message) {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
 				}));
+			} else if (command.startsWith("resetuser") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
+				remove(bans, (mentionsArray[0]));
+				message.channel.send(new Discord.RichEmbed({
+					color: 16711680,
+					title: "User reset",
+					thumbnail: {
+						url: "https://vignette.wikia.nocookie.net/clashroyale/images/a/ab/Angry_Face.png"
+					},
+					description: `<@${mentionsArray[0].id}>'s score has been reset'`,
+					footer: {
+						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+					}
+					
+				}));
+				players[mentionsArray[0]] = {};
 			}else{
 				if(bans.includes(message.author)){
 					message.channel.send(new Discord.RichEmbed({
-						color: 3447003,
+						color: 16711680,
 						title: "You're banned",
 						description: `<@${message.author.id}> cannot set scores.`,
 						footer: {
@@ -342,22 +358,22 @@ bot.on("message", function (message) {
 	}	
 });
 bot.on("messageReactionAdd",function(messageReaction, user){
-		console.log("reacted")
-		console.log(`games object is:`);
-		console.log(games);
-		console.log(messageReaction)
-	if (games[messageReaction.message.id] && messageReaction.emoji =="🚫"){
+		// console.log("reacted")
+		// console.log(`games object is:`);
+		// console.log(games);
+		// console.log(messageReaction)
+	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(message.author)){
 			console.log(games);
 			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				undoRank(games[messageReaction.message.id])
+
 				messageReaction.message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "Game cancelled",
-					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\``,
-					footer: {
-						text: `Cancelled by <@${user}>`
-					}
+					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\`\n\nCancelled by ${user}`,
+					
 				}));
+				games[messageReaction.message.id]=false;
 			}
 		}
 	
