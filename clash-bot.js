@@ -4,7 +4,7 @@ https://discordapp.com/oauth2/authorize?client_id=380885450002530312&scope=bot&p
 
 /*
 TODO: 
-- make all admins able to use all admin commands
+- make all admins able to use all admin commands (√)
 - admin ability: reset a single player's score (√)
 - cancel feature using .createReactionCollector(√)
 
