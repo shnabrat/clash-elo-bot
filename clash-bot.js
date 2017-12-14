@@ -83,6 +83,7 @@ function updateRankMessage(){
 		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} <@${sortedPlayersArray[i][0]}>: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 } 
+var resultsArray=[];
 function updateRank(results){
 	// really simple thing
 	// takes array: [ [user0,score0], [user1, score1] ]
@@ -289,7 +290,7 @@ bot.on("message", function (message) {
 				var scoresArray=scores[1].split(":");
 				scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
 				// [ [user1,score1], [user2, score2] ]
-				var resultsArray = [
+				resultsArray = [
 					[message.author, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
 				];
 				// console.log("ok")
@@ -307,7 +308,7 @@ bot.on("message", function (message) {
 						}
 					));
 					toSendEmbed=true;
-					games[message.id]=resultsArray;
+					
 				}else{
 					// error: not a bo3 game
 					message.channel.send(new Discord.RichEmbed({
@@ -330,7 +331,7 @@ bot.on("message", function (message) {
 	if(toSendEmbed&&message.author.id==bot.user.id){
 		
 		message.react("🚫")
-		
+		games[message.id] = resultsArray;
 		toSendEmbed=false;
 		// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
 	} 
