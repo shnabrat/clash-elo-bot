@@ -200,7 +200,7 @@ bot.on("message", function (message) {
 			);
 			break;
 		case "reset":
-			if (message.author.id == "232215051052908545" || message.author.id == "291118393099157505") {
+			if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin")) {
 			// console.log("yes1")
 			sortPlayers();
 			updateRankMessage();
@@ -243,7 +243,7 @@ bot.on("message", function (message) {
 		// console.log(mentionsArray)
 		
 		if (mentionsArray.length == 1 &&mentionsArray[0].id!=message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/){
-			if (command.startsWith("ban")&&(message.author.id == "232215051052908545" || message.author.id == "291118393099157505")){
+			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))){
 				bans.push(mentionsArray[0]);
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
@@ -253,10 +253,10 @@ bot.on("message", function (message) {
 					},
 					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
-						text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+						text: "This can be cancelled by an admin with `!elo unban @user`. "
 					}
 				}));
-			} else if (command.startsWith("unban") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
+			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
 				remove(bans, (mentionsArray[0]));
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
@@ -266,7 +266,7 @@ bot.on("message", function (message) {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
 				}));
-			} else if (command.startsWith("resetuser") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
+			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
 				remove(bans, (mentionsArray[0]));
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
@@ -274,13 +274,13 @@ bot.on("message", function (message) {
 					thumbnail: {
 						url: "https://vignette.wikia.nocookie.net/clashroyale/images/a/ab/Angry_Face.png"
 					},
-					description: `<@${mentionsArray[0].id}>'s score has been reset'`,
+					description: `<@${mentionsArray[0].id}>'s score has been reset`,
 					footer: {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
 					
 				}));
-				players[mentionsArray[0]] = {};
+				players[mentionsArray[0].id] = {};
 			}else{
 				if(bans.includes(message.author)){
 					message.channel.send(new Discord.RichEmbed({
@@ -364,7 +364,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(messageReaction)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author)){
 			console.log(games);
-			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
+		if (/*user.id == "232215051052908545" || user.id == "291118393099157505"||*/messageReaction.message.member.roles.find("name", "Admin")||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				undoRank(games[messageReaction.message.id])
 
 				messageReaction.message.channel.send(new Discord.RichEmbed({
