@@ -341,7 +341,9 @@ bot.on("message", function (message) {
 	}	
 });
 bot.on("messageReactionAdd",function(messageReaction, user){
-		if(games[messageReaction.message.id]){
+		console.log("reacted")
+		if(games[messageReaction.message.id]/*&&messageReaction*/){
+			console.log(games);
 			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				undoRank(games[messageReaction.message.id])
 				message.channel.send(new Discord.RichEmbed({
