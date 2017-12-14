@@ -350,7 +350,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 			console.log(games);
 			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				undoRank(games[messageReaction.message.id])
-				message.channel.send(new Discord.RichEmbed({
+				messageReaction.message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "Game cancelled",
 					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\``,
