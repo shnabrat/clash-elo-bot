@@ -342,6 +342,8 @@ bot.on("message", function (message) {
 });
 bot.on("messageReactionAdd",function(messageReaction, user){
 		console.log("reacted")
+		console.log(`games object is:`);
+		console.log(games);
 		if(games[messageReaction.message.id]/*&&messageReaction*/){
 			console.log(games);
 			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
