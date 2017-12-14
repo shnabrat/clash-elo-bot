@@ -121,7 +121,7 @@ function undoRank(results) {
 
 		} else {
 			players[results[0][0].id].score -= (parseInt(results[0][1]) - parseInt(results[1][1])) * 2;
-			players[results[1][0].id].score -= (parseInt(results[0][1]) - parseInt(results[1][1])) * 2;
+			players[results[1][0].id].score += (parseInt(results[0][1]) - parseInt(results[1][1])) * 2;
 			if (results[0][1] < results[1][1]) {
 				players[results[0][0].id].score += 5
 				players[results[1][0].id].score -= 5
@@ -248,7 +248,7 @@ bot.on("message", function (message) {
 			if (command.startsWith("ban")&&(message.author.id == "232215051052908545" || message.author.id == "291118393099157505")){
 				bans.push(mentionsArray[0]);
 				message.channel.send(new Discord.RichEmbed({
-					color: 3447003,
+					color: 16711680,
 					title: "User banned",
 					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
@@ -258,7 +258,7 @@ bot.on("message", function (message) {
 			} else if (command.startsWith("unban") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
 				remove(bans, (mentionsArray[0]));
 				message.channel.send(new Discord.RichEmbed({
-					color: 3447003,
+					color: 16711680,
 					title: "User unbanned",
 					description: `<@${mentionsArray[0].id}> has been forgiven for their heinous crimes.`,
 					footer: {
@@ -346,7 +346,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		console.log(`games object is:`);
 		console.log(games);
 		console.log(messageReaction)
-		if(games[messageReaction.message.id]/*&&messageReaction*/){
+	if (games[messageReaction.message.id] && messageReaction.emoji =="🚫"){
 			console.log(games);
 			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				undoRank(games[messageReaction.message.id])
@@ -355,7 +355,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 					title: "Game cancelled",
 					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\``,
 					footer: {
-						text: `Cancelled by <@${user.id}>`
+						text: `Cancelled by <@${user}>`
 					}
 				}));
 			}
