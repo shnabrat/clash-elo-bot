@@ -166,7 +166,7 @@ bot.on("message", function (message) {
 					url:bot.user.avatarURL
 				},
 				title: "Clash Royale Elo Bot: Help",
-				description: "This bot lets you record the score in best-of-3 games against your opponent.",
+				description: "This bot lets you record the score in games (up to 5 points) against your opponent.",
 				fields:[
 					{
 						name: "Core commands",
@@ -310,7 +310,7 @@ bot.on("message", function (message) {
 					[message.author, scoresArray[0]],[mentionsArray[0], scoresArray[1]]
 				];
 				// console.log("ok")
-				if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] + resultsArray[1][1]<=3){
+				if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] <= 5 && resultsArray[1][1] <= 5 /*resultsArray[0][1] + resultsArray[1][1]<=3*/){
 					// console.log("yes3")
 					updateRank(resultsArray);
 					message.channel.send(new Discord.RichEmbed(
