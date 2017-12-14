@@ -330,7 +330,7 @@ bot.on("message", function (message) {
 					message.channel.send(new Discord.RichEmbed({
 						color: 3447003,
 						title: "Something went wrong.",
-						description: `Maybe you formatted the message wrong, or mentioned the wrong players. Try again.`,
+						description: `Maybe you formatted the message wrong, or mentioned the wrong players. Try again.\n Note: Only games up to 5 points each are allowed.`,
 						footer: {
 							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 						}
