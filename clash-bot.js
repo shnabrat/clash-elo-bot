@@ -5,7 +5,8 @@ https://discordapp.com/oauth2/authorize?client_id=380885450002530312&scope=bot&p
 /*
 TODO: 
 - make all admins able to use all admin commands
--cancel feature using .createReactionCollector()
+- admin ability: reset a single player's score
+- cancel feature using .createReactionCollector()
 
 
 error checking (inputs are numbers, within range, etc.) (√)
@@ -107,6 +108,29 @@ function updateRank(results){
 		}
 	}
 }
+function undoRank(results) {
+	// really simple thing
+	// takes array: [ [user0,score0], [user1, score1] ]
+	console.log("undoing rank for: ");
+	console.log(results);
+	if (!players[results[0][0].id] || !players[results[1][0].id]) {
+	}else{
+		
+		if (results[0][1] == results[1][1]) {
+
+		} else {
+			players[results[0][0].id].score -= (parseInt(results[0][1]) - parseInt(results[1][1])) * 2;
+			players[results[1][0].id].score -= (parseInt(results[0][1]) - parseInt(results[1][1])) * 2;
+			if (results[0][1] < results[1][1]) {
+				players[results[0][0].id].score += 5
+				players[results[1][0].id].score -= 5
+			} else if (results[0][1] > results[1][1]) {
+				players[results[1][0].id].score += 5
+				players[results[0][0].id].score -= 5
+			}
+		}
+	}
+}
 
 bot.on("ready", function(){
 	// bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
@@ -196,6 +220,9 @@ bot.on("message", function (message) {
 			players = {
 
 			}
+			games={
+
+			}
 		} else {
 			// console.log("no")
 		}
@@ -224,7 +251,7 @@ bot.on("message", function (message) {
 					title: "User banned",
 					description: `<@${mentionsArray[0].id}> has been a naughty child.`,
 					footer: {
-						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+						text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
 					}
 				}));
 			} else if (command.startsWith("unban") && (message.author.id == "232215051052908545" || message.author.id == "291118393099157505")) {
@@ -242,7 +269,7 @@ bot.on("message", function (message) {
 					message.channel.send(new Discord.RichEmbed({
 						color: 3447003,
 						title: "You're banned",
-						description: `<@${mentionsArray[0].id}> cannot set scores.`,
+						description: `<@${message.author.id}> cannot set scores.`,
 						footer: {
 							// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 						}
@@ -275,7 +302,7 @@ bot.on("message", function (message) {
 							title: "Scores updated!",
 							description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 							footer:{
-								// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+								text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
 							}
 						}
 					));
@@ -300,18 +327,33 @@ bot.on("message", function (message) {
 	}
 	}
 	}
-	// if(toSendEmbed&&message.author.id==bot.user.id){
+	if(toSendEmbed&&message.author.id==bot.user.id){
 		
-	// 	message.react("🚫")
-
-	// 	toSendEmbed=false;
-	// 	// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
-	// } 
+		message.react("🚫")
+		
+		toSendEmbed=false;
+		// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
+	} 
 	if(message.author.id==bot.user.id){
 		if(toPin){
 			message.pin();
 		}
 	}	
 });
-
+bot.on("react",function(messageReaction, user){
+		if(games[messageReaction.message.id]){
+			if (user.id == "232215051052908545" || user.id == "291118393099157505"||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
+				undoRank(games[messageReaction.message.id])
+				message.channel.send(new Discord.RichEmbed({
+					color: 16711680,
+					title: "Game cancelled",
+					description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\``,
+					footer: {
+						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
+					}
+				}));
+			}
+		}
+	
+});
 bot.login(process.env.BOT_TOKEN);
