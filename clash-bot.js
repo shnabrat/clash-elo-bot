@@ -332,7 +332,7 @@ bot.on("message", function (message) {
 							{
 								color: 3447003,
 								title: "Score pending",
-								description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+								description: `**Game:** \n${resultsArray[0][0]} vs. ${resultsArray[0][0]}\n Score: ${resultsArray[0][1]}:${resultsArray[1][1]}`,
 								footer: {
 									text: "This must be confirmed by a pro player or admin by pressing the ✅ reaction below. \nThis can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
 								}
