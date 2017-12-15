@@ -406,7 +406,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 
 			}));
 		}
-	} else if (games[messageReaction.message.id] && messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
+	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
 		// console.log(games);
 		console.log("ok")
 		console.log(messageReaction.message.member.roles);
