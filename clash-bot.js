@@ -20,7 +20,9 @@ people outside the server can't be in a game (idk if it's necessary, you can onl
 var Discord = require("discord.js");
 var fs = require("fs");
 var bot = new Discord.Client();
-var toSendEmbed=false;
+var tosendconfirm=false;
+var tosendcancel = false;
+
 /*
 users array is like
 
@@ -312,19 +314,33 @@ bot.on("message", function (message) {
 				// console.log("ok")
 				if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] <= 5 && resultsArray[1][1] <= 5 /*resultsArray[0][1] + resultsArray[1][1]<=3*/){
 					// console.log("yes3")
-					updateRank(resultsArray);
-					message.channel.send(new Discord.RichEmbed(
-						{
-							color: 3447003,
-							title: "Scores updated!",
-							description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
-							footer:{
-								text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+					if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
+						updateRank(resultsArray);
+						message.channel.send(new Discord.RichEmbed(
+							{
+								color: 3447003,
+								title: "Scores updated!",
+								description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+								footer:{
+									text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+								}
 							}
-						}
-					));
-					toSendEmbed=true;
-					
+						));
+						tosendcancel=true;
+					}else{
+						message.channel.send(new Discord.RichEmbed(
+							{
+								color: 3447003,
+								title: "Score pending",
+								description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+								footer: {
+									text: "This must be confirmed by a pro player or admin by pressing the ✅ reaction below. \nThis can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+								}
+							}
+						));
+						tosendconfirm=true;
+						tosendcancel=true;
+					}
 				}else{
 					// error: not a bo3 game
 					message.channel.send(new Discord.RichEmbed({
@@ -344,11 +360,18 @@ bot.on("message", function (message) {
 	}
 	}
 	}
-	if(toSendEmbed&&message.author.id==bot.user.id){
+	if(tosendcancel&&message.author.id==bot.user.id){
 		
 		message.react("🚫")
 		games[message.id] = resultsArray;
-		toSendEmbed=false;
+		tosendcancel=false;
+		// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
+	} 
+	if (tosendconfirm && message.author.id == bot.user.id) {
+
+		message.react("✅")
+		games[message.id] = resultsArray;
+		tosendconfirm = false;
 		// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
 	} 
 	if(message.author.id==bot.user.id){
@@ -364,8 +387,8 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(messageReaction)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author)){
 			console.log(games);
-		if (/*user.id == "232215051052908545" || user.id == "291118393099157505"||*/messageReaction.message.member.roles.find("name", "Admin")||games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
-				undoRank(games[messageReaction.message.id])
+		if (games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
+				
 
 				messageReaction.message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
@@ -374,8 +397,30 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 					
 				}));
 				games[messageReaction.message.id]=false;
-			}
+		} else if (messageReaction.message.member.roles.find("name", "Admin")){
+			undoRank(games[messageReaction.message.id])
+			messageReaction.message.channel.send(new Discord.RichEmbed({
+				color: 16711680,
+				title: "Game cancelled",
+				description: `Game was:\n <@${games[messageReaction.message.id][0][0].id}> vs. <@${games[messageReaction.message.id][1][0].id}> with score \`${games[messageReaction.message.id][0][1]}\` to \`${games[messageReaction.message.id][1][1]}\`\n\nCancelled by ${user}`,
+
+			}));
 		}
+	} else if (games[messageReaction.message.id] && messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
+		console.log(games);
+		if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
+			updateRank(games[messageReaction.message.id])
+
+			message.channel.send(new Discord.RichEmbed(
+				{
+					color: 3447003,
+					title: "Game confirmed and scores updated!",
+					description: `${games[messageReaction.message.id][0][0]}: ${games[messageReaction.message.id][resultsArray[0][0].id].score}\n${games[messageReaction.message.id][1][0]}: ${games[messageReaction.message.id][resultsArray[1][0].id].score}\nConfirmed by Cancelled by ${user}`,
+				}
+			));
+			games[messageReaction.message.id] = false;
+		}
+	}
 	
 });
 bot.login(process.env.BOT_TOKEN);
