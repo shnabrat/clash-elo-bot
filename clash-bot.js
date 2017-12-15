@@ -385,8 +385,9 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(`games object is:`);
 		// console.log(games);
 		// console.log(messageReaction)
-	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id){
+	if (games[messageReaction.message.id] && messageReaction.emoji == ":no_entry_sign:" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id){
 			// console.log(games);
+			console.log()
 		if (games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				
 
@@ -406,7 +407,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 
 			}));
 		}
-	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id != bot.user.id) {
+	} else if (messageReaction.emoji == ":white_check_mark:" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id) {
 		// console.log(games);
 		// console.log(messageReaction.message.member.roles);
 		// console.log(messageReaction.message.member.roles.find("name", "Admin"));
