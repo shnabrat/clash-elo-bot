@@ -410,7 +410,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(games);
 		// console.log(messageReaction.message.member.roles);
 		// console.log(messageReaction.message.member.roles.find("name", "Admin"));
-		console.log(messageReaction.message.guild.members[user.id])
+		console.log(messageReaction.message.guild.members)
 		if (messageReaction.message.guild.members[user.id].roles.find("name", "Admin") /*|| messageReaction.message.member.roles.find("name", "2Fresh-PRO")*/) {
 			console.log('yes')
 			updateRank(games[messageReaction.message.id])
