@@ -385,7 +385,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(`games object is:`);
 		// console.log(games);
 		// console.log(messageReaction)
-	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author)){
+	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id){
 			// console.log(games);
 		if (games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				
@@ -406,11 +406,11 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 
 			}));
 		}
-	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
+	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id) {
 		// console.log(games);
 		console.log("ok")
-		console.log(messageReaction.message.member.roles);
-		console.log(messageReaction.message.member.roles.find("name", "Admin"));
+		// console.log(messageReaction.message.member.roles);
+		// console.log(messageReaction.message.member.roles.find("name", "Admin"));
 		if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
 			console.log('yes')
 			updateRank(games[messageReaction.message.id])
