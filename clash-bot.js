@@ -330,7 +330,7 @@ bot.on("message", function (message) {
 					}else{
 						message.channel.send(new Discord.RichEmbed(
 							{
-								color: 3447003,
+								color: 16763904,
 								title: "Score pending",
 								description: `**Game:** \n${resultsArray[0][0]} vs. ${resultsArray[0][0]}\n Score: ${resultsArray[0][1]}:${resultsArray[1][1]}`,
 								footer: {
@@ -386,7 +386,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		// console.log(games);
 		// console.log(messageReaction)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author)){
-			console.log(games);
+			// console.log(games);
 		if (games[messageReaction.message.id][0][0].id==user.id||games[messageReaction.message.id][1][0].id==user.id) {
 				
 
@@ -407,8 +407,10 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 			}));
 		}
 	} else if (games[messageReaction.message.id] && messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
-		console.log(games);
+		// console.log(games);
+		console.log("ok")
 		if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
+			console.log('yes')
 			updateRank(games[messageReaction.message.id])
 
 			message.channel.send(new Discord.RichEmbed(
