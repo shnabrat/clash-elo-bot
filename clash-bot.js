@@ -302,9 +302,10 @@ bot.on("message", function (message) {
 						// console.log('bot')
 					}
 				}
-			if(!anyIsBot){
+					if (!anyIsBot && command.split(" ").length==2){
 				var scores=command.split(" ");
 				// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
+
 				var scoresArray=scores[1].split(":");
 				scoresArray=[parseInt(scoresArray[0]), parseInt(scoresArray[1])]
 				// [ [user1,score1], [user2, score2] ]
