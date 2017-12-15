@@ -314,7 +314,7 @@ bot.on("message", function (message) {
 				// console.log("ok")
 				if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] <= 5 && resultsArray[1][1] <= 5 /*resultsArray[0][1] + resultsArray[1][1]<=3*/){
 					// console.log("yes3")
-					if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
+					if (message.member.roles.find("name", "Admin") || message.member.roles.find("name", "2Fresh-PRO")) {
 						updateRank(resultsArray);
 						message.channel.send(new Discord.RichEmbed(
 							{
