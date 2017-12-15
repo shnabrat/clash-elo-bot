@@ -409,6 +409,8 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 	} else if (games[messageReaction.message.id] && messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author)) {
 		// console.log(games);
 		console.log("ok")
+		console.log(messageReaction.message.member.roles);
+		console.log(messageReaction.message.member.roles.find("name", "Admin"));
 		if (messageReaction.message.member.roles.find("name", "Admin") || messageReaction.message.member.roles.find("name", "2Fresh-PRO")) {
 			console.log('yes')
 			updateRank(games[messageReaction.message.id])
