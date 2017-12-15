@@ -408,7 +408,8 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 		}
 	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id) {
 		// console.log(games);
-		console.log("ok")
+		console.log(messageReaction.message.member.roles)
+		console.log(messageReaction.message.member.roles.find("name", "Admin"))
 		// console.log(messageReaction.message.member.roles);
 		// console.log(messageReaction.message.member.roles.find("name", "Admin"));
 		if (messageReaction.message.member.roles.find("name", "Admin") /*|| messageReaction.message.member.roles.find("name", "2Fresh-PRO")*/) {
