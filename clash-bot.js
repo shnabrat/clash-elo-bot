@@ -397,7 +397,7 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 					
 				}));
 				games[messageReaction.message.id]=false;
-		} else if (messageReaction.message.member.roles.find("name", "Admin")){
+		} else if (messageReaction.message.guild.members[user.id].roles.find("name", "Admin")){
 			undoRank(games[messageReaction.message.id])
 			messageReaction.message.channel.send(new Discord.RichEmbed({
 				color: 16711680,
@@ -406,13 +406,13 @@ bot.on("messageReactionAdd",function(messageReaction, user){
 
 			}));
 		}
-	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id == bot.user.id) {
+	} else if (messageReaction.emoji == "✅" && !bans.includes(messageReaction.message.author) && messageReaction.message.author.id != bot.user.id) {
 		// console.log(games);
 		console.log(messageReaction.message.member.roles)
 		console.log(messageReaction.message.member.roles.find("name", "Admin"))
 		// console.log(messageReaction.message.member.roles);
 		// console.log(messageReaction.message.member.roles.find("name", "Admin"));
-		if (messageReaction.message.member.roles.find("name", "Admin") /*|| messageReaction.message.member.roles.find("name", "2Fresh-PRO")*/) {
+		if (messageReaction.message.guild.members[user.id].roles.find("name", "Admin") /*|| messageReaction.message.member.roles.find("name", "2Fresh-PRO")*/) {
 			console.log('yes')
 			updateRank(games[messageReaction.message.id])
 
