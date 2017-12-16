@@ -358,6 +358,8 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(`games object is:`);
 	// console.log(games);
 	// console.log(messageReaction)
+	console.log(messageReaction)
+	console.log(messageReaction.message.guild.members)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author) && messageReaction.message.guild.members[user.id]) {
 		console.log(games);
 		if (/*user.id == "232215051052908545" || user.id == "291118393099157505"||*/messageReaction.message.guild.members[user.id].roles.find("name", "Admin") || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
