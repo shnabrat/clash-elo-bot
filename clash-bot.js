@@ -362,7 +362,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	console.log(messageReaction.message.guild.members)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author) && messageReaction.message.guild.members[user.id]) {
 		console.log(games);
-		if (/*user.id == "232215051052908545" || user.id == "291118393099157505"||*/messageReaction.message.guild.members[user.id].roles.find("name", "Admin") || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
+		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
 
 			messageReaction.message.channel.send(new Discord.RichEmbed({
