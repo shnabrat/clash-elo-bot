@@ -302,6 +302,7 @@ bot.on("message", function (message) {
 		if (mentionsArray.length == 1 && mentionsArray[0].id != message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/) {
 			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
 				bans.push(mentionsArray[0].id);
+				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User banned",
@@ -315,6 +316,7 @@ bot.on("message", function (message) {
 				}));
 			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
 				remove(bans, (mentionsArray[0].id));
+				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User unbanned",
@@ -324,7 +326,7 @@ bot.on("message", function (message) {
 					}
 				}));
 			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
-				remove(bans, (mentionsArray[0].id));
+				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User reset",
@@ -370,6 +372,7 @@ bot.on("message", function (message) {
 						if (resultsArray[0][1] >= 0 && resultsArray[1][1] >= 0 && resultsArray[0][1] <= 5 && resultsArray[1][1] <= 5 /*resultsArray[0][1] + resultsArray[1][1]<=3*/) {
 							// console.log("yes3")
 							updateRank(resultsArray);
+							createVariablesString();
 							message.channel.send(new Discord.RichEmbed(
 								{
 									color: 3447003,
@@ -427,7 +430,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 		console.log(games);
 		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
-
+			createVariablesString();
 			messageReaction.message.channel.send(new Discord.RichEmbed({
 				color: 16711680,
 				title: "Game cancelled",
@@ -437,7 +440,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 			games[messageReaction.message.id] = false;
 		}
 	}
-	createVariablesString();
+	
 
 });
 bot.login(process.env.BOT_TOKEN);
