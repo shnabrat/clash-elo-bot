@@ -29,11 +29,12 @@ var rankMessage = ``;
 players = {
 
 }
+
 games = []
 var sortedPlayersArray = [];
 var bans = [];
 function sortPlayers() {
-	// convert players to array[]
+	// convert players to array [ ["id":{score:10}] ]
 	var playersArray = Object.keys(players).map(function (key) {
 		return [key, players[key]];
 	});
@@ -126,10 +127,70 @@ function undoRank(results) {
 	}
 }
 
+function updateVariables(str) {
+	// since server gets reset everyday, I needed a way to keep variabels
+	// tbh the best solution was just to have this bot send a DM every time a variable is updated
+
+	// variables needed:
+	/*
+	players{
+		"id goes here": {
+			score: 0
+		}
+	}
+	bans[
+		"id"
+	]
+	
+	games[]
+	sortedPlayersArray[] – doable using sortPlayers();
+	
+	*/
+
+
+	inputs=str.split("\n")
+	if(inputs.length==2){
+		for(var i in inputs[0].split(",")){
+			// ["id:points" , "id:points"]
+			
+					players[inputs[0].split(",")[i].split(":")[0]]={
+						score: players[inputs[0].split(",")[i].split(":")[1]]
+				}
+			
+		}
+		for (var i in inputs[1].split(",")) {
+				bans.push(inputs[1][i])
+			}
+		}
+
+
+}
+function createVariablesString(){
+	var arr=["",""]
+	for(var i in sortedPlayersArray){
+		arr[0] += `${sortedPlayersArray[i][0]}:${sortedPlayersArray[i][1].score},`
+		// "id:points,id:points"
+	}
+	for (var i in bans) {
+		arr[1] += `${bans[i]},`
+		// "id:points,id:points"
+	}
+	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
+		.then(message => {
+			updateVariables(message.content)
+		})
+		.catch(console.error);
+}
 bot.on("ready", function () {
 	// bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
 	// bot.user.setPresence({ game: { name: '!elo about', type: 0 } });
 	bot.user.setGame("!elo about")
+	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
+		.then(message => {
+			message.edit(`${arr[0]}\n${arr[1]}`)
+		})
+		.catch(console.error);
+	
 })
 bot.on("message", function (message) {
 	// if(message.content=="bleep"){
@@ -239,7 +300,7 @@ bot.on("message", function (message) {
 
 		if (mentionsArray.length == 1 && mentionsArray[0].id != message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/) {
 			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
-				bans.push(mentionsArray[0]);
+				bans.push(mentionsArray[0].id);
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User banned",
@@ -252,7 +313,7 @@ bot.on("message", function (message) {
 					}
 				}));
 			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
-				remove(bans, (mentionsArray[0]));
+				remove(bans, (mentionsArray[0].id));
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User unbanned",
@@ -262,7 +323,7 @@ bot.on("message", function (message) {
 					}
 				}));
 			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
-				remove(bans, (mentionsArray[0]));
+				remove(bans, (mentionsArray[0].id));
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
 					title: "User reset",
@@ -277,7 +338,7 @@ bot.on("message", function (message) {
 				}));
 				delete players[mentionsArray[0].id];
 			} else {
-				if (bans.includes(message.author)) {
+				if (bans.includes(message.author.id)) {
 					message.channel.send(new Discord.RichEmbed({
 						color: 16711680,
 						title: "You're banned",
@@ -295,7 +356,7 @@ bot.on("message", function (message) {
 							// console.log('bot')
 						}
 					}
-					if (!anyIsBot) {
+					if (!anyIsBot && command.split(" ").length==2) {
 						var scores = command.split(" ");
 						// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
 						var scoresArray = scores[1].split(":");
@@ -352,6 +413,7 @@ bot.on("message", function (message) {
 			message.pin();
 		}
 	}
+	createVariablesString();
 });
 bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log("reacted")
@@ -360,7 +422,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(messageReaction)
 	console.log(messageReaction)
 	console.log(messageReaction.message.guild.members)
-	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author) ) {
+	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id) ) {
 		console.log(games);
 		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
@@ -374,6 +436,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 			games[messageReaction.message.id] = false;
 		}
 	}
+	createVariablesString();
 
 });
 bot.login(process.env.BOT_TOKEN);
