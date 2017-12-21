@@ -163,7 +163,7 @@ function updateVariables(str) {
 			}
 		}
 
-
+console.log(players);
 }
 function createVariablesString(){
 	var arr=["",""]
