@@ -177,7 +177,8 @@ function createVariablesString(){
 	}
 	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
 		.then(message => {
-			updateVariables(message.content)
+			
+			message.edit(`${arr[0]}\n${arr[1]}`)
 		})
 		.catch(console.error);
 }
@@ -187,7 +188,7 @@ bot.on("ready", function () {
 	bot.user.setGame("!elo about")
 	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
 		.then(message => {
-			message.edit(`${arr[0]}\n${arr[1]}`)
+			updateVariables(message.content)
 		})
 		.catch(console.error);
 	
