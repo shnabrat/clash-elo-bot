@@ -81,8 +81,8 @@ var resultsArray = [];
 function updateRank(results) {
 	// really simple thing
 	// takes array: [ [user0,score0], [user1, score1] ]
-	console.log("updating rank for: ");
-	console.log(results);
+	// console.log("updating rank for: ");
+	// console.log(results);
 	if (!players[results[0][0].id]) {
 		players[results[0][0].id] = { score: 1000 }
 	}
@@ -106,8 +106,8 @@ function updateRank(results) {
 function undoRank(results) {
 	// really simple thing
 	// takes array: [ [user0,score0], [user1, score1] ]
-	console.log("undoing rank for: ");
-	console.log(results);
+	// console.log("undoing rank for: ");
+	// console.log(results);
 	if (!players[results[0][0].id] || !players[results[1][0].id]) {
 	} else {
 
@@ -148,37 +148,53 @@ function updateVariables(str) {
 	*/
 
 
-	inputs=str.split("\n")
+	inputs=str.split("|")
 	if(inputs.length==2){
+		// console.log("generating variables from string")
 		for(var i in inputs[0].split(",")){
 			// ["id:points" , "id:points"]
-			
+			if (inputs[0].split(",")[i].split(":")[0] && parseInt(inputs[0].split(",")[i].split(":")[1])){
 					players[inputs[0].split(",")[i].split(":")[0]]={
-						score: players[inputs[0].split(",")[i].split(":")[1]]
+						score: parseInt(inputs[0].split(",")[i].split(":")[1])
+						
 				}
-			
-		}
-		for (var i in inputs[1].split(",")) {
-				bans.push(inputs[1][i])
+			// console.log(`score is now ${inputs[0].split(",")[i].split(":")[1]}`)
 			}
 		}
+		if(inputs[1].length>0){
+			for (var i in inputs[1].split(",")) {
+				if (parseInt(inputs[1].split(",")[i])){
+					bans.push(inputs[1].split(",")[i])
+					console.log(`bans variable has been set to ${bans}`)
+				}
+				}
+			}
+	}
 
-console.log(players);
+// console.log(players);
 }
 function createVariablesString(){
+	sortPlayers();
 	var arr=["",""]
+	console.log(sortedPlayersArray);
 	for(var i in sortedPlayersArray){
+		
 		arr[0] += `${sortedPlayersArray[i][0]}:${sortedPlayersArray[i][1].score},`
+		console.log(arr[0])
 		// "id:points,id:points"
 	}
-	for (var i in bans) {
-		arr[1] += `${bans[i]},`
-		// "id:points,id:points"
-	}
-	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
-		.then(message => {
+	if(bans.length>0){
+		for (var i in bans) {
+			arr[1] += `${bans[i]},`
+			// "id:points,id:points"
+			console.log(`bans string has been set to ${bans}`)
 			
-			message.edit(`${arr[0]}\n${arr[1]}`)
+		}
+	}
+	bot.channels.find("id", "393219688789966853").fetchMessage('393220942001864714')
+		.then(message => {
+			// console.log("setting variables string")
+			message.edit(`${arr[0]}|${arr[1]}`)
 		})
 		.catch(console.error);
 }
@@ -186,9 +202,10 @@ bot.on("ready", function () {
 	// bot.user.setAvatar("https://vignette.wikia.nocookie.net/clashroyale/images/7/76/Gg.png/revision/latest?cb=20160719200117");
 	// bot.user.setPresence({ game: { name: '!elo about', type: 0 } });
 	bot.user.setGame("!elo about")
-	bot.channels.find("id", "393219688789966853").fetchMessage('393220943771598848')
+	bot.channels.find("id", "393219688789966853").fetchMessage('393220942001864714')
 		.then(message => {
 			updateVariables(message.content)
+			// message.edit(``)
 		})
 		.catch(console.error);
 	
@@ -424,10 +441,10 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(`games object is:`);
 	// console.log(games);
 	// console.log(messageReaction)
-	console.log(messageReaction)
-	console.log(messageReaction.message.guild.members)
+	// console.log(messageReaction)
+	// console.log(messageReaction.message.guild.members)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id) ) {
-		console.log(games);
+		// console.log(games);
 		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
 			createVariablesString();
