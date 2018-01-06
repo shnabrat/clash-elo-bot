@@ -89,6 +89,12 @@ function updateRank(results) {
 	if (!players[results[1][0].id]) {
 		players[results[1][0].id] = { score: 1000 }
 	}
+	var scoreDifference = players[results[0][0].id].score - players[results[1][0].id].score;
+	if(scoreDifference/15>5){
+		scoreDifference=75
+	}else if(scoreDifference/15<-5){
+		scoreDifference=-75
+	}
 	if (results[0][1] == results[1][1]) {
 
 	} else {
@@ -101,6 +107,8 @@ function updateRank(results) {
 			players[results[1][0].id].score += 5
 			players[results[0][0].id].score -= 5
 		}
+		players[results[0][0].id].score-=Math.ceil(scoreDifference/15);
+		players[results[1][0].id].score+=Math.ceil(scoreDifference/15);
 	}
 }
 function undoRank(results) {
