@@ -29,7 +29,7 @@ var rankMessage = ``;
 players = {
 
 }
-
+var scoreDifference;
 games = []
 var sortedPlayersArray = [];
 var bans = [];
@@ -89,11 +89,11 @@ function updateRank(results) {
 	if (!players[results[1][0].id]) {
 		players[results[1][0].id] = { score: 1000 }
 	}
-	var scoreDifference = players[results[0][0].id].score - players[results[1][0].id].score;
-	if(scoreDifference/15>5){
-		scoreDifference=75
-	}else if(scoreDifference/15<-5){
-		scoreDifference=-75
+	scoreDifference = players[results[0][0].id].score - players[results[1][0].id].score;
+	if(scoreDifference/15>4){
+		scoreDifference=15*4
+	}else if(scoreDifference/15<-4){
+		scoreDifference=-15*4
 	}
 	if (results[0][1] == results[1][1]) {
 
@@ -113,7 +113,7 @@ function updateRank(results) {
 }
 function undoRank(results) {
 	// really simple thing
-	// takes array: [ [user0,score0], [user1, score1] ]
+	// takes array: [ [user0,score0], [user1, score1], overallScoreDifference ]
 	// console.log("undoing rank for: ");
 	// console.log(results);
 	if (!players[results[0][0].id] || !players[results[1][0].id]) {
@@ -131,6 +131,8 @@ function undoRank(results) {
 				players[results[1][0].id].score += 5
 				players[results[0][0].id].score -= 5
 			}
+			players[results[0][0].id].score += Math.ceil(results[2] / 15);
+			players[results[1][0].id].score -= Math.ceil(results[2] / 15);
 		}
 	}
 }
@@ -434,6 +436,7 @@ bot.on("message", function (message) {
 
 		message.react("🚫")
 		games[message.id] = resultsArray;
+		games[message.id].push(scoreDifference);
 		toSendEmbed = false;
 		// updateRank([[results[0][0],results[1][1]],[[results[1][0],results[0][1]]]);
 	}
