@@ -74,7 +74,7 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} <@${sortedPlayersArray[i][0].tag}>: \`${sortedPlayersArray[i][1].score}\`\n`;
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${sortedPlayersArray[i][0].tag}: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 }
 var resultsArray = [];
@@ -404,9 +404,9 @@ bot.on("message", function (message) {
 								{
 									color: 3447003,
 									title: "Scores updated!",
-									description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+									description: `${resultsArray[0][0].tag}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 									footer: {
-										text: "This can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+										text: "\nThis can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
 									}
 								}
 							));
