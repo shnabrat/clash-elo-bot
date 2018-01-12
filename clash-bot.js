@@ -62,7 +62,7 @@ function updateRankMessage() {
 		} else {
 			sortedPlayersArray[i][1].special = ""
 		}
-		if (j != 1) {
+		if (j != 1) { 
 			var count = 1
 			while (j != 1 && count < sortedPlayersArray.length) {
 				if (sortedPlayersArray[x][1].score == sortedPlayersArray[x - count][1].score) {
@@ -276,7 +276,7 @@ bot.on("message", function (message) {
 					thumbnail: {
 						url: "http://vignette1.wikia.nocookie.net/clashroyale/images/7/7c/LegendTrophy.png/revision/latest?cb=20160305151655"
 					},
-					title: "Clan Rankings",
+					title: "Team Rankings",
 					description: rankMessage,
 
 				})
