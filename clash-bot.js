@@ -74,7 +74,7 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		bot.fetchUser(sortedPlayersArray[i][0])
+		bot.fetchUser(sortedPlayersArray[i][0].id)
 			.then(user => {
 				// console.log("setting variables string")
 				var currentuser=user;
