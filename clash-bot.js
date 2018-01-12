@@ -74,7 +74,7 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} <@${sortedPlayersArray[i][0]}>: \`${sortedPlayersArray[i][1].score}\`\n`;
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} <@${sortedPlayersArray[i][0].tag}>: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 }
 var resultsArray = [];
@@ -270,18 +270,18 @@ bot.on("message", function (message) {
 			case "rankings":
 				sortPlayers();
 				updateRankMessage();
-				message.channel.send("**Team Rankings:**\n"+rankMessage);
-				// message.channel.send(new Discord.RichEmbed({
-				// 	color: 3447003,
-				// 	thumbnail: {
-				// 		url: "http://vignette1.wikia.nocookie.net/clashroyale/images/7/7c/LegendTrophy.png/revision/latest?cb=20160305151655"
-				// 	},
-				// 	title: "Clan Rankings",
-				// 	description: rankMessage,
+				// message.channel.send("**Team Rankings:**\n"+rankMessage);
+				message.channel.send(new Discord.RichEmbed({
+					color: 3447003,
+					thumbnail: {
+						url: "http://vignette1.wikia.nocookie.net/clashroyale/images/7/7c/LegendTrophy.png/revision/latest?cb=20160305151655"
+					},
+					title: "Clan Rankings",
+					description: rankMessage,
 
-				// })
+				})
 
-				// );
+				);
 				break;
 			case "reset":
 				if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin")) {
