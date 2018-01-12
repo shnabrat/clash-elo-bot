@@ -74,7 +74,14 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${sortedPlayersArray[i][0].username}#${sortedPlayersArray[i][0].discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
+		bot.fetchUser(sortedPlayersArray[i][0])
+			.then(user => {
+				// console.log("setting variables string")
+				var currentuser=user;
+			})
+			.catch(console.error);
+		
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${currentuser.username}#${currentuser.discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 }
 var resultsArray = [];
@@ -404,7 +411,7 @@ bot.on("message", function (message) {
 								{
 									color: 3447003,
 									title: "Scores updated!",
-									description: `${resultsArray[0][0].tag}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
+									description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 									footer: {
 										text: "\nThis can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
 									}
