@@ -74,7 +74,7 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${sortedPlayersArray[i][0].tag}: \`${sortedPlayersArray[i][1].score}\`\n`;
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${sortedPlayersArray[i][0].username}#${sortedPlayersArray[i][0].discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 }
 var resultsArray = [];
