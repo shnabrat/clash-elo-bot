@@ -53,6 +53,7 @@ function remove(array, element) {
 	}
 }
 function updateRankMessage() {
+	var currentUser=[];
 	rankMessage = "";
 	for (var i = 0; i < sortedPlayersArray.length; i++) {
 		var x = i;
@@ -77,11 +78,11 @@ function updateRankMessage() {
 		bot.fetchUser(sortedPlayersArray[i][0].id)
 			.then(user => {
 				// console.log("setting variables string")
-				var currentuser=user;
+				currentUser=[user.username,user.discriminator];
 			})
 			.catch(console.error);
 		
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${currentuser.username}#${currentuser.discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${currentUser[0]}#${currentuser[1]}: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
 }
 var resultsArray = [];
