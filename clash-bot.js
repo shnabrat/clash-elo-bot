@@ -52,8 +52,9 @@ function remove(array, element) {
 		array.splice(index, 1);
 	}
 }
+var currentUser = [];
 function updateRankMessage() {
-	var currentUser=[];
+
 	rankMessage = "";
 	for (var i = 0; i < sortedPlayersArray.length; i++) {
 		var x = i;
@@ -63,7 +64,7 @@ function updateRankMessage() {
 		} else {
 			sortedPlayersArray[i][1].special = ""
 		}
-		if (j != 1) { 
+		if (j != 1) {
 			var count = 1
 			while (j != 1 && count < sortedPlayersArray.length) {
 				if (sortedPlayersArray[x][1].score == sortedPlayersArray[x - count][1].score) {
@@ -75,16 +76,30 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-		bot.fetchUser(sortedPlayersArray[i][0].id)
-			.then(user => {
-				// console.log("setting variables string")
-				currentUser=[user.username,user.discriminator];
-			})
-			.catch(console.error);
-		
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${currentUser[0]}#${currentuser[1]}: \`${sortedPlayersArray[i][1].score}\`\n`;
+
+		//  function getUserData(){
+		// 	 bot.fetchUser(sortedPlayersArray[i][0])
+		// 	.then(user => {
+		// 		// console.log("setting variables string")
+		// 		// rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${user.username}#${user.discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
+		// 		return [user.username,user.discriminator];
+		// 	})
+		// 	.catch(console.error);	
+		// } 
+
+		// console.log(currentUser[0]);
+
+		// rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${getUserData()[0]}#${getUserData()[1]}: \`${sortedPlayersArray[i][1].score}\`\n`;
+
+
+
+
+		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} \`${bot.users.find("id", sortedPlayersArray[i][0]).username}#${bot.users.find("id", sortedPlayersArray[i][0]).discriminator}\`: \`${sortedPlayersArray[i][1].score}\`\n`;
 	}
+	// console.log(bot.users["243533758530060289"]);
+	// console.log(bot.users.find("id", "248090889396682753"));
 }
+
 var resultsArray = [];
 function updateRank(results) {
 	// really simple thing
@@ -98,10 +113,10 @@ function updateRank(results) {
 		players[results[1][0].id] = { score: 1000 }
 	}
 	scoreDifference = players[results[0][0].id].score - players[results[1][0].id].score;
-	if(scoreDifference/15>4){
-		scoreDifference=15*4
-	}else if(scoreDifference/15<-4){
-		scoreDifference=-15*4
+	if (scoreDifference / 15 > 4) {
+		scoreDifference = 15 * 4
+	} else if (scoreDifference / 15 < -4) {
+		scoreDifference = -15 * 4
 	}
 	if (results[0][1] == results[1][1]) {
 
@@ -115,8 +130,8 @@ function updateRank(results) {
 			players[results[1][0].id].score += 5
 			players[results[0][0].id].score -= 5
 		}
-		players[results[0][0].id].score-=Math.ceil(scoreDifference/15);
-		players[results[1][0].id].score+=Math.ceil(scoreDifference/15);
+		players[results[0][0].id].score -= Math.ceil(scoreDifference / 15);
+		players[results[1][0].id].score += Math.ceil(scoreDifference / 15);
 	}
 }
 function undoRank(results) {
@@ -166,47 +181,47 @@ function updateVariables(str) {
 	*/
 
 
-	inputs=str.split("|")
-	if(inputs.length==2){
+	inputs = str.split("|")
+	if (inputs.length == 2) {
 		// console.log("generating variables from string")
-		for(var i in inputs[0].split(",")){
+		for (var i in inputs[0].split(",")) {
 			// ["id:points" , "id:points"]
-			if (inputs[0].split(",")[i].split(":")[0] && parseInt(inputs[0].split(",")[i].split(":")[1])){
-					players[inputs[0].split(",")[i].split(":")[0]]={
-						score: parseInt(inputs[0].split(",")[i].split(":")[1])
-						
+			if (inputs[0].split(",")[i].split(":")[0] && parseInt(inputs[0].split(",")[i].split(":")[1])) {
+				players[inputs[0].split(",")[i].split(":")[0]] = {
+					score: parseInt(inputs[0].split(",")[i].split(":")[1])
+
 				}
-			// console.log(`score is now ${inputs[0].split(",")[i].split(":")[1]}`)
+				// console.log(`score is now ${inputs[0].split(",")[i].split(":")[1]}`)
 			}
 		}
-		if(inputs[1].length>0){
+		if (inputs[1].length > 0) {
 			for (var i in inputs[1].split(",")) {
-				if (parseInt(inputs[1].split(",")[i])){
+				if (parseInt(inputs[1].split(",")[i])) {
 					bans.push(inputs[1].split(",")[i])
-					console.log(`bans variable has been set to ${bans}`)
-				}
+					// console.log(`bans variable has been set to ${bans}`)
 				}
 			}
+		}
 	}
 
-// console.log(players);
+	// console.log(players);
 }
-function createVariablesString(){
+function createVariablesString() {
 	sortPlayers();
-	var arr=["",""]
-	console.log(sortedPlayersArray);
-	for(var i in sortedPlayersArray){
-		
+	var arr = ["", ""]
+	// console.log(sortedPlayersArray);
+	for (var i in sortedPlayersArray) {
+
 		arr[0] += `${sortedPlayersArray[i][0]}:${sortedPlayersArray[i][1].score},`
-		console.log(arr[0])
+		// console.log(arr[0])
 		// "id:points,id:points"
 	}
-	if(bans.length>0){
+	if (bans.length > 0) {
 		for (var i in bans) {
 			arr[1] += `${bans[i]},`
 			// "id:points,id:points"
-			console.log(`bans string has been set to ${bans}`)
-			
+			// console.log(`bans string has been set to ${bans}`)
+
 		}
 	}
 	bot.channels.find("id", "393219688789966853").fetchMessage('393220942001864714')
@@ -226,7 +241,7 @@ bot.on("ready", function () {
 			// message.edit(``)
 		})
 		.catch(console.error);
-	
+
 })
 bot.on("message", function (message) {
 	// if(message.content=="bleep"){
@@ -262,7 +277,7 @@ bot.on("message", function (message) {
 					fields: [
 						{
 							name: "Core commands",
-							value: "• `!elo @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> 2:1)\n\n • `!elo rankings` – to view rankings"
+							value: "• `!elo @opponent yourscore:opponentscore`\n (e.g. !elo <@232215051052908545> 2:1)\n\n • `!elo rank` – to view rankings"
 						},
 						{
 							name: "Moderator commands",
@@ -276,6 +291,7 @@ bot.on("message", function (message) {
 				}));
 				break;
 			case "rankings":
+			case "rank":
 				sortPlayers();
 				updateRankMessage();
 				// message.channel.send("**Team Rankings:**\n"+rankMessage);
@@ -394,7 +410,7 @@ bot.on("message", function (message) {
 							// console.log('bot')
 						}
 					}
-					if (!anyIsBot && command.split(" ").length==2) {
+					if (!anyIsBot && command.split(" ").length == 2) {
 						var scores = command.split(" ");
 						// scores = command.slice(mentionsArray[0].id.length+mentionsArray[1].id.length+8);
 						var scoresArray = scores[1].split(":");
@@ -462,7 +478,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(messageReaction)
 	// console.log(messageReaction)
 	// console.log(messageReaction.message.guild.members)
-	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id) ) {
+	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id)) {
 		// console.log(games);
 		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
@@ -476,7 +492,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 			games[messageReaction.message.id] = false;
 		}
 	}
-	
+
 
 });
 bot.login(process.env.BOT_TOKEN);
