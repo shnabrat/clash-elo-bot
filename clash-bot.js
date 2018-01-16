@@ -93,8 +93,9 @@ function updateRankMessage() {
 
 
 
-
-		rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} \`${bot.users.find("id", sortedPlayersArray[i][0]).username}#${bot.users.find("id", sortedPlayersArray[i][0]).discriminator}\`: \`${sortedPlayersArray[i][1].score}\`\n`;
+		if (bot.users.find("id", sortedPlayersArray[i][0])){
+			rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} \`${bot.users.find("id", sortedPlayersArray[i][0]).username}#${bot.users.find("id", sortedPlayersArray[i][0]).discriminator}\`: \`${sortedPlayersArray[i][1].score}\`\n`
+		}; 
 	}
 	// console.log(bot.users["243533758530060289"]);
 	// console.log(bot.users.find("id", "248090889396682753"));
