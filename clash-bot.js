@@ -290,7 +290,6 @@ bot.on("message", function (message) {
 					]
 				}));
 				break;
-			case "rankings":
 			case "rank":
 				sortPlayers();
 				updateRankMessage();
