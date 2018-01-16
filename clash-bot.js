@@ -76,26 +76,11 @@ function updateRankMessage() {
 				j--;
 			}
 		}
-
-		//  function getUserData(){
-		// 	 bot.fetchUser(sortedPlayersArray[i][0])
-		// 	.then(user => {
-		// 		// console.log("setting variables string")
-		// 		// rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${user.username}#${user.discriminator}: \`${sortedPlayersArray[i][1].score}\`\n`;
-		// 		return [user.username,user.discriminator];
-		// 	})
-		// 	.catch(console.error);	
-		// } 
-
-		// console.log(currentUser[0]);
-
-		// rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} ${getUserData()[0]}#${getUserData()[1]}: \`${sortedPlayersArray[i][1].score}\`\n`;
-
-
-
-		if (bot.users.find("id", sortedPlayersArray[i][0])){
-			rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} \`${bot.users.find("id", sortedPlayersArray[i][0]).username}#${bot.users.find("id", sortedPlayersArray[i][0]).discriminator}\`: \`${sortedPlayersArray[i][1].score}\`\n`
-		}; 
+		if (bot.users.find("id", sortedPlayersArray[i][0])) {
+			rankMessage += `**${j}.** ${sortedPlayersArray[i][1].special} \`${bot.users.find("id", sortedPlayersArray[i][0]).username}#${bot.users.find("id", sortedPlayersArray[i][0]).discriminator}\`: \`${sortedPlayersArray[i][1].score}\`\n`;
+		} else {
+			console.log("no");
+		}
 	}
 	// console.log(bot.users["243533758530060289"]);
 	// console.log(bot.users.find("id", "248090889396682753"));
@@ -291,6 +276,7 @@ bot.on("message", function (message) {
 					]
 				}));
 				break;
+			case "rankings":
 			case "rank":
 				sortPlayers();
 				updateRankMessage();
