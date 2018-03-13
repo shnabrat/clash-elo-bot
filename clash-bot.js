@@ -99,10 +99,10 @@ function updateRank(results) {
 		players[results[1][0].id] = { score: 1000 }
 	}
 	scoreDifference = players[results[0][0].id].score - players[results[1][0].id].score;
-	if (scoreDifference / 15 > 4) {
-		scoreDifference = 15 * 4
-	} else if (scoreDifference / 15 < -4) {
-		scoreDifference = -15 * 4
+	if (scoreDifference / 30 > 2) {
+		scoreDifference = 30 * 2
+	} else if (scoreDifference / 30 < -2) {
+		scoreDifference = -30 * 2
 	}
 	if (results[0][1] == results[1][1]) {
 
@@ -116,8 +116,8 @@ function updateRank(results) {
 			players[results[1][0].id].score += 5
 			players[results[0][0].id].score -= 5
 		}
-		players[results[0][0].id].score -= Math.ceil(scoreDifference / 15);
-		players[results[1][0].id].score += Math.ceil(scoreDifference / 15);
+		players[results[0][0].id].score -= Math.ceil(scoreDifference / 30);
+		players[results[1][0].id].score += Math.ceil(scoreDifference / 30);
 	}
 }
 function undoRank(results) {
@@ -140,8 +140,8 @@ function undoRank(results) {
 				players[results[1][0].id].score += 5
 				players[results[0][0].id].score -= 5
 			}
-			players[results[0][0].id].score += Math.ceil(results[2] / 15);
-			players[results[1][0].id].score -= Math.ceil(results[2] / 15);
+			players[results[0][0].id].score += Math.ceil(results[2] / 30);
+			players[results[1][0].id].score -= Math.ceil(results[2] / 30);
 		}
 	}
 }
