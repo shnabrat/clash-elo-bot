@@ -235,7 +235,7 @@ bot.on("message", function (message) {
 	// }
 	var prefix = "!elo";
 	var command;
-	if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.channel.id == "387023805140303872") {
+	if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.channel.id == "453381862497452032") {
 		command = message.content.slice(prefix.length + 1).toLowerCase();
 
 
@@ -294,7 +294,7 @@ bot.on("message", function (message) {
 				);
 				break;
 			case "reset":
-				if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin")) {
+				if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Competitive Manager")) {
 					// console.log("yes1")
 					sortPlayers();
 					updateRankMessage();
@@ -337,7 +337,7 @@ bot.on("message", function (message) {
 		// console.log(mentionsArray)
 
 		if (mentionsArray.length == 1 && mentionsArray[0].id != message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/) {
-			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
+			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Competitive Manager"))) {
 				bans.push(mentionsArray[0].id);
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
@@ -351,7 +351,7 @@ bot.on("message", function (message) {
 						text: "This can be cancelled by an admin with !elo unban @user. "
 					}
 				}));
-			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
+			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Competitive Manager"))) {
 				remove(bans, (mentionsArray[0].id));
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
@@ -362,7 +362,7 @@ bot.on("message", function (message) {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
 				}));
-			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Admin"))) {
+			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.member.roles.find("name", "Competitive Manager"))) {
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
@@ -416,7 +416,7 @@ bot.on("message", function (message) {
 									title: "Scores updated!",
 									description: `${resultsArray[0][0]}: ${players[resultsArray[0][0].id].score}\n${resultsArray[1][0]}: ${players[resultsArray[1][0].id].score}`,
 									footer: {
-										text: "\nThis can be cancelled by one of the players or an admin by pressing the 🚫 reaction below. "
+										text: "\nThis can be cancelled by one of the players or a manager by pressing the 🚫 reaction below. "
 									}
 								}
 							));
@@ -466,7 +466,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(messageReaction.message.guild.members)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id)) {
 		// console.log(games);
-		if (user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "290993806587854848" || user.id == "122797185472528387" || user.id == "253441391894593536" || user.id == "248090889396682753" || games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
+		if (user.id == "232215051052908545" || message.member.roles.find("name", "Competitive Manager")||games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
 			createVariablesString();
 			messageReaction.message.channel.send(new Discord.RichEmbed({
