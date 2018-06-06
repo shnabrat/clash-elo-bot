@@ -466,7 +466,7 @@ bot.on("messageReactionAdd", function (messageReaction, user) {
 	// console.log(messageReaction.message.guild.members)
 	if (games[messageReaction.message.id] && messageReaction.emoji == "🚫" && !bans.includes(messageReaction.message.author.id)) {
 		// console.log(games);
-		if (user.id == "232215051052908545" || message.member.roles.find("name", "Competitive Manager")||games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
+		if (user.id == "232215051052908545" ||user.id == "232215051052908545" || user.id == "291118393099157505" || user.id == "122797185472528387" || user.id == "294115572864516096" || user.id == "303834140015329281" || user.id =="284812596434173952"||user.id==""||games[messageReaction.message.id][0][0].id == user.id || games[messageReaction.message.id][1][0].id == user.id) {
 			undoRank(games[messageReaction.message.id])
 			createVariablesString();
 			messageReaction.message.channel.send(new Discord.RichEmbed({
