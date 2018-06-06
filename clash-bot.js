@@ -294,7 +294,7 @@ bot.on("message", function (message) {
 				);
 				break;
 			case "reset":
-				if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545||message.member.roles.find("name", "Competitive Manager")) {
+				if (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545"||message.member.roles.find("name", "Competitive Manager")) {
 					// console.log("yes1")
 					sortPlayers();
 					updateRankMessage();
@@ -337,7 +337,7 @@ bot.on("message", function (message) {
 		// console.log(mentionsArray)
 
 		if (mentionsArray.length == 1 && mentionsArray[0].id != message.author.id/*&& (mentionsArray[1].id == message.author.id||mentionsArray[0].id==message.author.id)/* && message.channel.members[mentionsArray[0].id] && message.channel.members[mentionsArray[1].id]*/) {
-			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545||message.member.roles.find("name", "Competitive Manager"))) {
+			if (command.startsWith("ban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545"||message.member.roles.find("name", "Competitive Manager"))) {
 				bans.push(mentionsArray[0].id);
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
@@ -351,7 +351,7 @@ bot.on("message", function (message) {
 						text: "This can be cancelled by an admin with !elo unban @user. "
 					}
 				}));
-			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545||message.member.roles.find("name", "Competitive Manager"))) {
+			} else if (command.startsWith("unban") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545"||message.member.roles.find("name", "Competitive Manager"))) {
 				remove(bans, (mentionsArray[0].id));
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
@@ -362,7 +362,7 @@ bot.on("message", function (message) {
 						// text: "This can be cancelled by one of the players by pressing the 🚫 reaction below. "
 					}
 				}));
-			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545||message.member.roles.find("name", "Competitive Manager"))) {
+			} else if (command.startsWith("resetuser") && (/*message.author.id == "232215051052908545" || message.author.id == "291118393099157505"*/message.author.id == "232215051052908545"||message.member.roles.find("name", "Competitive Manager"))) {
 				createVariablesString();
 				message.channel.send(new Discord.RichEmbed({
 					color: 16711680,
